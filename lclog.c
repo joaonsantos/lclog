@@ -11,7 +11,7 @@ lclog* lclog_new(char *prefix) {
   return log;
 };
 
-void lclog_log(lclog* log, char* fmt, ...) {
+void lclog_log(lclog *log, char *fmt, ...) {
   // print prefix
   fprintf(log->out, "%s ", log->prefix);
 
