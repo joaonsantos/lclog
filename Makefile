@@ -14,7 +14,6 @@ TARGET=liblclog.a
 # test options
 TTARGET=test/
 
-
 $(TARGET): $(OBJS)
 	$(AR) $(ARFLAGS) $@ $^
 	cp $(DEPS) $(TARGET) $(TTARGET)
