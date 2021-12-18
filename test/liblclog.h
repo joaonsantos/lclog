@@ -4,12 +4,12 @@
 #define __libc_cllog_h
 
 typedef struct lclog {
-  char* prefix;
-  FILE* out;
+  char *prefix;
+  FILE *out;
 
 } lclog;
 
-lclog* lclog_new();
-void lclog_log(lclog* log, char* fmt, ...);
+lclog* lclog_new(char *prefix);
+void lclog_log(lclog *log, char *fmt, ...);
 
 #endif /* __libc_cllog_h */

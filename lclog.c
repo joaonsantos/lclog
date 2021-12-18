@@ -4,17 +4,16 @@
 
 #include <liblclog.h>
 
-lclog* lclog_new() {
+lclog* lclog_new(char *prefix) {
   lclog* log = malloc(sizeof(lclog));
   log->out = stdout;
-  log->prefix = "[LOG] ";
+  log->prefix = prefix;
   return log;
 };
 
 void lclog_log(lclog* log, char* fmt, ...) {
-
   // print prefix
-  fprintf(log->out, "%s", log->prefix);
+  fprintf(log->out, "%s ", log->prefix);
 
   // print log message
   va_list ap;
