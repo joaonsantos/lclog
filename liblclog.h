@@ -9,7 +9,7 @@ typedef struct lclog {
 
 } lclog;
 
-lclog* lclog_new(char *prefix);
+lclog *lclog_new(char *prefix);
 void lclog_log(lclog *log, char *fmt, ...);
 
 #endif /* __libc_cllog_h */

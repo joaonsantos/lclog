@@ -4,8 +4,8 @@
 
 #include <liblclog.h>
 
-lclog* lclog_new(char *prefix) {
-  lclog* log = malloc(sizeof(lclog));
+lclog *lclog_new(char *prefix) {
+  lclog *log = malloc(sizeof(lclog));
   log->out = stdout;
   log->prefix = prefix;
   return log;
