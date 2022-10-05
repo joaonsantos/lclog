@@ -2,20 +2,22 @@
 Q=@
 
 # c options
-CC=gcc
-CFLAGS=-Wall -Wextra -std=c99 -I.
-LIBS=liblclog.a
+CC       :=    gcc
+CFLAGS   :=    -Wall -Werror -Wextra -pedantic -std=c99
+LINKS    :=    -L.. -llclog
+INCLUDES :=    -I..
+
+SRCS     :=    $(wildcard *.c)
+TESTS    :=    $(SRCS:.c=.test)
 
 .PHONY: run
-run: test
-	./$<
+run: $(TESTS)
+	$Qrm -f *.o *.test
 
-%.o: %.c
-	$(CC) $(CFLAGS) -c -o $@ $<
-
-test: test.o $(LIBS)
-	$(CC) $(CFLAGS) -o test $^
+%.test: %.c
+	$Q$(CC) $(CFLAGS) -o $@ $< $(LINKS) $(INCLUDES)
+	@./$@ > /dev/null || echo "$@ failed"
 
 .PHONY: clean
 clean:
-	rm -f *.o
+	$Qrm -f *.o *.test

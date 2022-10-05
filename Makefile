@@ -1,26 +1,41 @@
 # global options
 Q=@
 
-# c options
-CC=gcc
-CFLAGS=-Wall -Wextra -std=c99 -I.
-SRC=lclog.c
-DEPS=liblclog.h
-OBJS=lclog.o
-AR=ar
-ARFLAGS=-rcs
-TARGET=liblclog.a
+INCDIR := /usr/local/include
+LIBDIR := /usr/local/lib
 
-# test options
-TTARGET=test/
+# c options
+CC      :=    gcc
+CFLAGS  :=    -Wall -Werror -Wextra -pedantic -std=c99
+
+# ar options
+AR      :=    ar
+ARFLAGS :=    -rcs
+
+# target options
+SRCS    :=     $(wildcard *.c)
+HDRS    :=     $(SRCS:.c=.h)
+OBJS    :=     $(SRCS:.c=.o)
+
+TARGET  :=    liblclog.a
+TESTDIR :=    test/
 
 $(TARGET): $(OBJS)
-	$(AR) $(ARFLAGS) $@ $^
-	cp $(DEPS) $(TARGET) $(TTARGET)
+	$Q$(AR) $(ARFLAGS) $@ $^
 
-$(OBJS): $(SRC) $(DEPS)
-	$(CC) $(CFLAGS) -c -o $@ $<
+%.o: %.c
+	$Q$(CC) $(CFLAGS) -c -o $@ $<
+
+.PHONY: install
+install: $(TARGET) $(HDRS)
+	cp $(TARGET) $(LIBDIR)
+	cp $(HDRS) $(INCDIR)
+
+.PHONY: test
+test: $(TARGET)
+	$Qmake --no-print-directory -C test run
 
 .PHONY: clean
 clean:
-	rm -f *.a *.o
+	$Qmake --no-print-directory -C test clean
+	$Qrm -f *.a *.o

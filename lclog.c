@@ -2,14 +2,20 @@
 #include <stdio.h>
 #include <stdarg.h>
 
-#include <liblclog.h>
+#include "lclog.h"
 
 lclog *lclog_new(char *prefix) {
   lclog *log = malloc(sizeof(lclog));
   log->out = stdout;
   log->prefix = prefix;
   return log;
-};
+}
+
+void lclog_free(lclog *log) {
+  log->out = NULL;
+  log->prefix = NULL;
+  free(log);
+}
 
 void lclog_log(lclog *log, char *fmt, ...) {
   // print prefix
@@ -23,4 +29,4 @@ void lclog_log(lclog *log, char *fmt, ...) {
 
   // begin a new line
   fprintf(log->out, "\n");
-};
+}
