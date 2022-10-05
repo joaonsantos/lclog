@@ -12,9 +12,8 @@ lclog *lclog_new(char *prefix) {
 }
 
 void lclog_free(lclog *log) {
-  log->out = NULL;
-  log->prefix = NULL;
   free(log);
+  log = NULL;
 }
 
 void lclog_log(lclog *log, char *fmt, ...) {
